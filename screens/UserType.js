@@ -13,16 +13,21 @@ const UserType = ({ navigation }) => {
 
     const [lobbyNumber, setLobbyNumber] = React.useState("")
 
+    const [docId, setDocId] = React.useState("")
+
     const { name } = navigation.state.params;
 
     const dbRef = firebase.firestore().collection('lobby')
 
-    const navigateLobby = (userTypeInfo, lobbyNumber) => {
+    const navigateLobby = (userTypeInfo, lobbyNumber, docId) => {
+      console.log("DOC ID IS", docId)
         navigation.navigate('Lobby', {
           userType: userTypeInfo,
-          lobbyNumber: lobbyNumber
+          lobbyNumber: lobbyNumber,
+          docId:  docId
         })
     }
+
 
     const generateRandom = () => {
       const random = Math.floor(Math.random() * 10000).toString()
@@ -31,20 +36,24 @@ const UserType = ({ navigation }) => {
     }
 
     const startLobby = (random) => {
-      dbRef.doc(random).set({
-
-      })
+      dbRef.doc(random).set({})
 
       dbRef.doc(random).collection("person").add({
         usertype: 'host',
         name: name
       })
+      // .then((docRef) => {
+      //   navigateLobby("host", lobbyNumber, docRef.id)
+      // })
     }
 
     const addGuestToLobby = (lobbyNumber, name) => {
       dbRef.doc(lobbyNumber).collection("person").add({
         usertype: 'guest',
-        name: name
+        name: name,
+      })
+      .then((docRef) => {
+        setDocId(docRef.id)
       })
     }
 
@@ -65,7 +74,7 @@ const UserType = ({ navigation }) => {
                 const lobbyNumber = generateRandom()
                 startLobby(lobbyNumber)
                 // place user in lobby
-                navigateLobby("host", lobbyNumber)
+                navigateLobby("host", lobbyNumber, docId)
             }
         }
         />
@@ -86,7 +95,7 @@ const UserType = ({ navigation }) => {
                     if (docSnapshot.exists) {
                       addGuestToLobby(lobbyNumber, name)
                       console.log("adding guest to lobby")
-                      navigateLobby("guest", lobbyNumber)
+                      navigateLobby("guest", lobbyNumber, docId)
                     }
                   });
                 } catch (error){

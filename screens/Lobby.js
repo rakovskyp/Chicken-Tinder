@@ -16,40 +16,43 @@ const Lobby = (props) => {
     const [lobbyUsers, setLobbyUsers] = React.useState([])
 
     const { userType } = props.navigation.state.params
+    
     const { lobbyNumber } = props.navigation.state.params
 
-    const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
     const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
-
-    // state:
-    // lobby number
-    // all users in the lobby 
 
     const navigateChickenTinderApp = () => {
         props.navigation.navigate('ChickenTinderApp')
     }
 
-    personRef
-    .onSnapshot(function(querySnapshot) {
-        const personList = [];
-        
-        querySnapshot.forEach(function(doc) {
-            personList.push({
-              id: doc.id,
-              name: doc.data().name,
-              usertype: doc.data().usertype
-            });
-        });
+    useEffect(() => {
+      const unsubscribe = personRef
+      .onSnapshot(function(querySnapshot) {
+          const personList = [];
+          
+          querySnapshot.forEach(function(doc) {
+              personList.push({
+                id: doc.id,
+                name: doc.data().name,
+                usertype: doc.data().usertype
+              });
+          });
+  
+          setLobbyUsers(personList)
+      });
 
-        setLobbyUsers(personList)
-        // console.log("Current people in lobby: ", cities.join(", "));
-    });
-
-    // console.log("lobbyUsers", lobbyUsers)
-    
+      return () => {
+        unsubscribe()
+      }
+    })
     
   return (
     <>
+      <View>
+        <Text>
+          Lobby ID:  {lobbyNumber}
+        </Text>
+      </View>
       <View >
       <Button title="Start Lobby"
         onPress={

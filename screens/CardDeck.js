@@ -7,38 +7,6 @@ import Card from '../components/Card';
 import firebase from '../firebase'
 
 
-// ASSUME HOST - START LEDGER 
-
-// firebase.firestore().collection('lobby').doc('1545').set({
-//     timeStart: "firebase.firestore.FieldValue.serverTimestamp()"
-// })
-
-// ledgerRef = firebase.firestore().collection('lobby').doc('1545')
-
-// dbRef = firebase.firestore().collection('cities')
-
-// Create NYC in cities
-// dbRef.doc("NYC").set({
-//     name: "New York City",
-//     state: "New York",
-//     status: "OP"
-// })
-
-// Pull NYC data
-// refNYC  = firebase.firestore().collection('cities').doc('NYC')
-// refNYC.get().then(
-//     function(doc) {
-//         if (doc.exists) {
-//             console.log("Document data:", doc.data())
-//         } else {
-//             console.log("No Document Found!")
-//         }
-//     }
-// )
-
-// does this make one if its not there ??
-
-
 // represents the swiping deck of cards
 const CardDeck = (props) => {
 
