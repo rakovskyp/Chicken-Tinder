@@ -18,17 +18,21 @@ const screens = {
         screen: Lobby,
         navigationOptions: ({navigation}) => ({
             title: 'Profile',
+            gestureEnabled: false,
             headerLeft: () => <HeaderBackButton onPress={
                 () => {
                     const { lobbyNumber } = navigation.state.params;
                     const { docId } = navigation.state.params;
+                    const { userType } = navigation.state.params;
+                    const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
                     console.log("stacknav")
-                    console.log(lobbyNumber)
-                    console.log('docId of user', docId)
+                    console.log('docId of user', docId, 'lobby of user', lobbyNumber, 'usertype', userType)
+                    personRef.doc(docId).delete()
                     navigation.navigate('UserType')
+                    // 2-13-2020 - don't forget, deleting a document doesn't delete it's subcollections
                 }
-            
-            } />
+            } 
+            />
         })
     },
     ChickenTinderApp: {

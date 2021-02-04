@@ -15,9 +15,9 @@ const Lobby = (props) => {
 
     const [lobbyUsers, setLobbyUsers] = React.useState([])
 
-    const { userType } = props.navigation.state.params
+    const userType = props.navigation.state.params.userType
     
-    const { lobbyNumber } = props.navigation.state.params
+    const lobbyNumber = props.navigation.state.params.lobbyNumber
 
     const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
 

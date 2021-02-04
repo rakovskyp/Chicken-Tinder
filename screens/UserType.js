@@ -13,21 +13,9 @@ const UserType = ({ navigation }) => {
 
     const [lobbyNumber, setLobbyNumber] = React.useState("")
 
-    const [docId, setDocId] = React.useState("")
-
     const { name } = navigation.state.params;
 
     const dbRef = firebase.firestore().collection('lobby')
-
-    const navigateLobby = (userTypeInfo, lobbyNumber, docId) => {
-      console.log("DOC ID IS", docId)
-        navigation.navigate('Lobby', {
-          userType: userTypeInfo,
-          lobbyNumber: lobbyNumber,
-          docId:  docId
-        })
-    }
-
 
     const generateRandom = () => {
       const random = Math.floor(Math.random() * 10000).toString()
@@ -35,25 +23,31 @@ const UserType = ({ navigation }) => {
       return random
     }
 
-    const startLobby = (random) => {
+    const startLobby = async (random) => {
       dbRef.doc(random).set({})
 
-      dbRef.doc(random).collection("person").add({
+      const res = await dbRef.doc(random).collection("person").add({
         usertype: 'host',
         name: name
       })
-      // .then((docRef) => {
-      //   navigateLobby("host", lobbyNumber, docRef.id)
-      // })
+
+      navigation.navigate('Lobby', {
+        userType: 'host',
+        lobbyNumber: random,
+        docId:  res.id,
+      })
     }
 
-    const addGuestToLobby = (lobbyNumber, name) => {
-      dbRef.doc(lobbyNumber).collection("person").add({
+    const addGuestToLobby = async (lobbyNumber, name) => {
+      const res = await dbRef.doc(lobbyNumber).collection("person").add({
         usertype: 'guest',
         name: name,
       })
-      .then((docRef) => {
-        setDocId(docRef.id)
+      
+      navigation.navigate('Lobby', {
+        userType: 'guest',
+        lobbyNumber: lobbyNumber,
+        docId:  res.id,
       })
     }
 
@@ -70,11 +64,8 @@ const UserType = ({ navigation }) => {
         onPress={
             () => {
                 console.log("navigating to lobby as host")
-                // generate random number, stored in backend
                 const lobbyNumber = generateRandom()
                 startLobby(lobbyNumber)
-                // place user in lobby
-                navigateLobby("host", lobbyNumber, docId)
             }
         }
         />
@@ -95,7 +86,8 @@ const UserType = ({ navigation }) => {
                     if (docSnapshot.exists) {
                       addGuestToLobby(lobbyNumber, name)
                       console.log("adding guest to lobby")
-                      navigateLobby("guest", lobbyNumber, docId)
+                    } else {
+                      console.log('no lobby exists')
                     }
                   });
                 } catch (error){
