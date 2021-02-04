@@ -16,18 +16,6 @@ const Lobby = (props) => {
 
     const [lobbyUsers, setLobbyUsers] = React.useState([])
 
-    const [timeInactive, setTimeInactive] = useState(0)
-
-    const appState = useRef(AppState.currentState);
-
-    useEffect(() => {
-      AppState.addEventListener("change", _handleAppStateChange);
-
-      return () => {
-        AppState.removeEventListener("change", _handleAppStateChange);
-      };
-    }, []);
-
     const userType = props.navigation.state.params.userType
     
     const lobbyNumber = props.navigation.state.params.lobbyNumber
@@ -39,34 +27,6 @@ const Lobby = (props) => {
     const navigateChickenTinderApp = () => {
         props.navigation.replace('ChickenTinderApp')
     }
-
-    const _handleAppStateChange = (nextAppState) => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === "active"
-      ) {
-        console.log("App has come to the foreground!");
-        setTimeInactive(0)
-      }
-  
-      appState.current = nextAppState;
-      console.log("AppState", appState.current);
-      if (appState.current == 'background') {
-        props.navigation.navigate('UserType')
-        personRef.doc(docId).delete()
-      }
-
-      if (appState.current == 'inactive' && timeInactive > 10) {
-        props.navigation.navigate('UserType')
-        personRef.doc(docId).delete()
-      }
-
-      if (appState.current == 'inactive' && timeInactive == 0) {
-        setTimeInactive(1)
-        console.log('here', timeInactive)
-      }
-
-    };
 
     useEffect(() => {
       const unsubscribe = personRef
@@ -84,10 +44,7 @@ const Lobby = (props) => {
           setLobbyUsers(personList)
 
           console.log('subscribed')
-          // if (timeInactive > 0) {
-          //   setTimeInactive(timeInactive + 1)
-          //   console.log('time inactive', timeInactive)
-          // }
+  
       });
 
       return () => {
