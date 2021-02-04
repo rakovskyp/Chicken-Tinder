@@ -50,24 +50,24 @@ const CardDeck = (props) => {
                 })
                 console.log('swipe right')
                 // check if other parties saw this or not
-                ledgerRef.get().then(
+                // ledgerRef.get().then(
 
-                    function(doc) {
-                        if (doc.exists) {
-                            console.log(doc.data())
-                            restaurantHuh = doc.data()['RID1234']
-                            console.log(restaurantHuh)
+                //     function(doc) {
+                //         if (doc.exists) {
+                //             console.log(doc.data())
+                //             restaurantHuh = doc.data()['RID1234']
+                //             console.log(restaurantHuh)
 
-                            if (restaurantHuh == null) {
-                                ledgerRef.update({
-                                    RID1234: '1'
-                                })
-                            } else {
-                                console.log('success')
-                            }
-                        }
-                    }
-                )
+                //             if (restaurantHuh == null) {
+                //                 ledgerRef.update({
+                //                     RID1234: '1'
+                //                 })
+                //             } else {
+                //                 console.log('success')
+                //             }
+                //         }
+                //     }
+                // )
                 
 
             } else if (gestureState.dx < -120) {

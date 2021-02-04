@@ -7,12 +7,34 @@ import UserType from '../screens/UserType'
 import Lobby from '../screens/Lobby'
 import firebase from '../firebase'
 
+const findNewHost = async (personRef) => {
+    const newHostSnapshot = await personRef.where('usertype', '==', 'guest').limit(1).get()
+
+    if (newHostSnapshot.empty) {
+        console.log("empty lobby")
+        return 'nah'
+    } else {
+        newHostSnapshot.forEach(doc => {
+            console.log(doc.id, '=>', doc.data());
+            personRef.doc(doc.id).update({
+                usertype: 'host'
+            })
+        });
+    }
+}
+
 const screens = {
     BasicInfo: {
-        screen: BasicInfo
+        screen: BasicInfo,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+        })
     },
     UserType: {
-        screen: UserType
+        screen: UserType,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+        })
     },
     Lobby: {
         screen: Lobby,
@@ -27,16 +49,26 @@ const screens = {
                     const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
                     console.log("stacknav")
                     console.log('docId of user', docId, 'lobby of user', lobbyNumber, 'usertype', userType)
+
+                    if (userType == 'host') {
+                        findNewHost(personRef)
+                    }
+
                     personRef.doc(docId).delete()
+
                     navigation.navigate('UserType')
                     // 2-13-2020 - don't forget, deleting a document doesn't delete it's subcollections
+                    // DELETE LOBBIES WHEN THERE ARE NO PEOPLE IN IT!!!!
                 }
             } 
             />
         })
     },
     ChickenTinderApp: {
-        screen: ChickenTinderApp
+        screen: ChickenTinderApp,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+        }),
     }
 }
 
