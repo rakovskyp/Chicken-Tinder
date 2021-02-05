@@ -17,7 +17,14 @@ import firebase from './firebase'
 
 const ChickenTinderApp = (props) => {
 
+  const lobbyNumber = props.navigation.state.params.lobbyNumber
+
+  const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
+
+
   console.log("firebase api key", FIREBASE_API_KEY)
+  console.log("lobby id", props.navigation.state.params.lobbyNumber)
+  
 
   // hook that flips whether information mode styles should be activated or not
   const [infoStyles, setInfoStyles] = React.useState(true);

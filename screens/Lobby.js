@@ -25,7 +25,9 @@ const Lobby = (props) => {
     const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
 
     const navigateChickenTinderApp = () => {
-        props.navigation.replace('ChickenTinderApp')
+        props.navigation.replace('ChickenTinderApp', {
+          lobbyNumber: lobbyNumber
+        })
     }
 
     useEffect(() => {
