@@ -31,8 +31,8 @@ const Misc = (props) => {
         Jost_300Light, Jost_600SemiBold,
     });
 
-    const cuisine = props.data[props.cardIndex].cuisine;
-    const id = props.data[props.cardIndex].id;
+    const cuisine = props.data[props.cardIndex].cuisines[0];
+    const id = props.data[props.cardIndex].restaurant_id;
     const name = props.data[props.cardIndex].name;
     const price = props.data[props.cardIndex].price;
 
@@ -49,8 +49,7 @@ const Misc = (props) => {
         return (
             <Animated.View style={styles.misc}>
                 <Text style={[styles.text, styles.resName,]}>{name}</Text>
-                {/* <Text style={[styles.text, styles.resCuisine,]}>{cuisine}</Text> */}
-                <Text style={[styles.text, styles.resCuisine,]}>Japanese</Text>
+                <Text style={[styles.text, styles.resCuisine,]}>{cuisine}</Text>
                 <Text style={[styles.text, styles.resPrice]}>{price}</Text>
             </Animated.View>
         )

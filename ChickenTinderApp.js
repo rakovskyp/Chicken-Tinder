@@ -42,11 +42,18 @@ const ChickenTinderApp = (props) => {
   */
 
 
-    console.log('asking for location')
-    useEffect(() => getLocation, [])
+    useEffect(() => 
+    {
+      console.log('asking for location')
+      getLocation()
+    }
+    , [])
 
     useEffect(() => {
-      postData('https://us-central1-chicken-tinder-c7de2.cloudfunctions.net/yelp-scrape', { location: '40.65,-73.65' })
+      postData('https://us-central1-chicken-tinder-c7de2.cloudfunctions.net/grubhubSearch-2', {
+        latitude:"40.7415095",
+        longitude:"-73.9569751"}
+        )
       .then(data => {
         console.log('data incoming:')
         console.log(data); // JSON data parsed by `response.json()` call

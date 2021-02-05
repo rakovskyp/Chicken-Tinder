@@ -6,6 +6,44 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // Returns the specific details regarding each specific card
 const Details = (props) => {
+
+    function timeDifference(current, previous) {
+    
+        var msPerMinute = 60 * 1000;
+        var msPerHour = msPerMinute * 60;
+        var msPerDay = msPerHour * 24;
+        var msPerMonth = msPerDay * 30;
+        var msPerYear = msPerDay * 365;
+        
+        var elapsed = current - previous;
+        
+        if (elapsed < msPerMinute) {
+             return  'a few seconds ago';   
+        }
+        
+        else if (elapsed < msPerHour) {
+             return 'a few minutes ago';   
+        }
+        
+        else if (elapsed < msPerDay ) {
+             return 'less than a day ago';   
+        }
+    
+        else if (elapsed < msPerMonth) {
+             return 'several days ago';   
+        }
+        
+        else if (elapsed < msPerYear) {
+             return 'a few months ago';   
+        }
+        
+        else {
+             return 'over a year ago';   
+        }
+    }
+
+        const restaurant = props.data[props.index]
+
         return (
             <View>
                     <DetailsPicture
@@ -27,12 +65,16 @@ const Details = (props) => {
 
                 </View>
                 <View>
-                    <Text style={styles.details}>{props.data[props.index].name}</Text>
-                    <Text style={styles.stars}>{props.data[props.index].rating} Stars</Text>
-                    <Text style={styles.id}>{props.data[props.index].reviewtext}</Text>
-                    <Text style={styles.loc1}>{props.data[props.index].location[0]}</Text>
-                    <Text style={styles.loc2}>{props.data[props.index].location[1]}</Text>
-                    <Text style={styles.loc3}>{props.data[props.index].location[2]}</Text>
+                    <Text style={styles.details}>{restaurant.name}</Text>
+                    <Text style={styles.stars}>{restaurant.top_review.rating_value} stars</Text>
+                    <Text style={styles.id}>{restaurant.top_review.review_text}
+                     - {restaurant.top_review.reviewer_display_name} 
+                     {timeDifference(new Date(), new Date(restaurant.top_review.time_created))}
+                     
+                    </Text>
+                    {/* <Text style={styles.loc1}>{restaurant.[0]}</Text>
+                    <Text style={styles.loc2}>{restaurant.[1]}</Text>
+                    <Text style={styles.loc3}>{restaurant.[2]}</Text>  */}
                 </View>
             </View>
         )
