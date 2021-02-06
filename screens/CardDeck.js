@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import { View, Text, Image, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, ProgressViewIOSComponent, } from 'react-native';
 
 
 // import data from '../sampleData';
@@ -19,9 +19,11 @@ const CardDeck = (props) => {
 
     const { docId } = props
 
+    const { prefId } = props
+
     const scoreRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('leaderboard').doc('score')
     const prefRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
-    .collection('preferences').doc('preference')
+    .collection('preferences').doc(prefId)
 
     /*
         ---- A N I M A T I O N S -----

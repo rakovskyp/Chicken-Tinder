@@ -22,12 +22,15 @@ const Lobby = (props) => {
 
     const { docId } = props.navigation.state.params
 
+    const { prefId } = props.navigation.state.params
+
     const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
 
     const navigateChickenTinderApp = () => {
         props.navigation.replace('ChickenTinderApp', {
           lobbyNumber: lobbyNumber,
-          docId : docId
+          docId : docId, 
+          prefId : prefId
         })
     }
 
@@ -46,12 +49,12 @@ const Lobby = (props) => {
   
           setLobbyUsers(personList)
 
-          console.log('subscribed')
+          // console.log('subscribed')
   
       });
 
       return () => {
-        console.log('unsub')
+        // console.log('unsub')
         unsubscribe()
       }
     })

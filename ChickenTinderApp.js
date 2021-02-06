@@ -20,16 +20,14 @@ const ChickenTinderApp = (props) => {
 
   const { docId } = props.navigation.state.params
 
+  const { prefId } = props.navigation.state.params
+
   // const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
   
-  const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
+  // const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
 
   console.log("firebase api key", FIREBASE_API_KEY)
   console.log("lobby id", props.navigation.state.params.lobbyNumber)
-
-  useEffect(() => {
-    personRef.collection("preferences").add({ joinedLobby: fb.firestore.Timestamp.now() })
-  }, [])
   
 
   // hook that flips whether information mode styles should be activated or not
@@ -136,6 +134,7 @@ const ChickenTinderApp = (props) => {
               lobbyNumber={lobbyNumber}
               docId={docId}
               picIdx={picIndex}
+              prefId={prefId}
               data={resData}
               />}
           </View>
