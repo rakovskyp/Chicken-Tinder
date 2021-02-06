@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Button, View, ScrollView, FlatList } from 'react-native';
-import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
 import { FIREBASE_API_KEY } from '@env'
 
 import CardDeck from './screens/CardDeck'
 import Details from './components/Details'
 import firebase from './firebase'
+import fb from 'firebase'
 
 /*
   Future Ideas:
@@ -19,11 +18,18 @@ const ChickenTinderApp = (props) => {
 
   const lobbyNumber = props.navigation.state.params.lobbyNumber
 
-  const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
+  const { docId } = props.navigation.state.params
 
+  const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
+  
+  const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
 
   console.log("firebase api key", FIREBASE_API_KEY)
   console.log("lobby id", props.navigation.state.params.lobbyNumber)
+
+  useEffect(() => {
+    personRef.collection("preferences").add({ joinedLobby: fb.firestore.Timestamp.now() })
+  }, [])
   
 
   // hook that flips whether information mode styles should be activated or not
@@ -48,14 +54,6 @@ const ChickenTinderApp = (props) => {
     - fix i button cause there's an error with that
   */
 
-
-    useEffect(() => 
-    {
-      console.log('asking for location')
-      getLocation()
-    }
-    , [])
-
     useEffect(() => {
       postData('https://us-central1-chicken-tinder-c7de2.cloudfunctions.net/grubhubSearch-2', {
         latitude:"40.7415095",
@@ -67,31 +65,6 @@ const ChickenTinderApp = (props) => {
         setResData(data)
       });
   }, [])
-
-  // get user's location and send it to the 
-  const getLocation = async () => {
-    console.log('awaiting')
-    const { status } = await Permissions.askAsync(Permissions.LOCATION)
-    console.log('finished waiting')
-    if (status !== 'granted') {
-      console.log('PERMISSION NOT GRANTED FOR LOCATION')
-    } 
-
-    console.log('LOCATION GRANTED.')
-
-    console.log('awaiting 2')
-    const userLocation = await Location.getCurrentPositionAsync();
-    console.log('worked')
-    const { latitude, longitude } = userLocation.coords;
-    
-    // add user's coordinates to firestore database
-    firebase.firestore().collection('coords').add({
-      latitude: latitude,
-      longitude: longitude,
-    })
-    console.log(userLocation);
-
-  }
   
   // request data from google cloud platform
   async function postData(url = '', data = {}) {

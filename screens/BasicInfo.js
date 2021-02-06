@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 import {
   Keyboard,
   TextInput,
@@ -7,6 +9,7 @@ import {
   View,
   Text,
 } from "react-native";
+import firebase from '../firebase'
 
 const BasicInfo = (props) => {
   
@@ -16,6 +19,36 @@ const BasicInfo = (props) => {
         props.navigation.navigate('UserType', {
           name: name
         })
+    }
+
+    useEffect(() => {
+      console.log('asking for location')
+      getLocation()
+    }, [])
+
+    // get user's location and send it to the 
+    const getLocation = async () => {
+      console.log('awaiting')
+      const { status } = await Permissions.askAsync(Permissions.LOCATION)
+      console.log('finished waiting')
+      if (status !== 'granted') {
+        console.log('PERMISSION NOT GRANTED FOR LOCATION')
+      } 
+
+      console.log('LOCATION GRANTED.')
+
+      console.log('awaiting 2')
+      const userLocation = await Location.getCurrentPositionAsync();
+      console.log('worked')
+      const { latitude, longitude } = userLocation.coords;
+      
+      // add user's coordinates to firestore database
+      firebase.firestore().collection('coords').add({
+        latitude: latitude,
+        longitude: longitude,
+      })
+
+      console.log(userLocation);
     }
 
     

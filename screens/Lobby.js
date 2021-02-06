@@ -26,7 +26,8 @@ const Lobby = (props) => {
 
     const navigateChickenTinderApp = () => {
         props.navigation.replace('ChickenTinderApp', {
-          lobbyNumber: lobbyNumber
+          lobbyNumber: lobbyNumber,
+          docId : docId
         })
     }
 

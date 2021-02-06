@@ -8,6 +8,7 @@ import {
   Text,
 } from "react-native";
 import firebase from '../firebase'
+import fb from 'firebase'
 
 const UserType = ({ navigation }) => {
 
