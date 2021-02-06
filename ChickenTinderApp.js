@@ -20,7 +20,7 @@ const ChickenTinderApp = (props) => {
 
   const { docId } = props.navigation.state.params
 
-  const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
+  // const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
   
   const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
 
@@ -132,7 +132,9 @@ const ChickenTinderApp = (props) => {
               handleInfoStyle={handleInfoStyle}
               index={index}
               incIdx={handleIncIndex}
-              handlePress={handlePress}
+              // handlePress={handlePress}
+              lobbyNumber={lobbyNumber}
+              docId={docId}
               picIdx={picIndex}
               data={resData}
               />}

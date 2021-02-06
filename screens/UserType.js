@@ -25,12 +25,19 @@ const UserType = ({ navigation }) => {
     }
 
     const startLobby = async (random) => {
-      dbRef.doc(random).set({})
 
       const res = await dbRef.doc(random).collection("person").add({
         usertype: 'host',
         name: name
       })
+
+      // create preferences
+      dbRef.doc(random).collection("person").doc(res.id).collection('preferences').doc("preference").set({
+        joinedLobby: fb.firestore.FieldValue.serverTimestamp()
+      })
+
+      // create scoreboard
+      dbRef.doc(random).collection("leaderboard").doc("score").set({})
 
       navigation.navigate('Lobby', {
         userType: 'host',
@@ -43,6 +50,10 @@ const UserType = ({ navigation }) => {
       const res = await dbRef.doc(lobbyNumber).collection("person").add({
         usertype: 'guest',
         name: name,
+      })
+
+      dbRef.doc(lobbyNumber).collection("person").doc(res.id).collection('preferences').doc("preference").set({
+        joinedLobby: fb.firestore.FieldValue.serverTimestamp()
       })
       
       navigation.navigate('Lobby', {

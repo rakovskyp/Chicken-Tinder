@@ -5,6 +5,7 @@ import { View, Text, Image, StyleSheet, Animated, PanResponder, StatusBar, Dimen
 // import data from '../sampleData';
 import Card from '../components/Card';
 import firebase from '../firebase'
+import fb from 'firebase'
 
 
 // represents the swiping deck of cards
@@ -12,7 +13,15 @@ const CardDeck = (props) => {
 
     const [movingHuh, setMovingHuh] = React.useState(false);
 
+    const { lobbyNumber } = props
+
     const { width, height } = Dimensions.get('window');
+
+    const { docId } = props
+
+    const scoreRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('leaderboard').doc('score')
+    const prefRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
+    .collection('preferences').doc('preference')
 
     /*
         ---- A N I M A T I O N S -----
@@ -26,6 +35,18 @@ const CardDeck = (props) => {
     React.useEffect(() => {
         pan.setValue({x : 0, y : 0})
     }, [props.index])
+
+    const updateScore = (restid, sentiment) => {
+        scoreRef.update({
+            [restid]: fb.firestore.FieldValue.increment(1)
+        })
+    }
+
+    const updatePrefs = (restid, sentiment) => {
+        prefRef.update({
+            [restid]: sentiment
+        })
+    }
 
     // panResponder handles all swiping animations
     const panResponder = 
@@ -49,32 +70,16 @@ const CardDeck = (props) => {
                     props.incIdx();
                 })
                 console.log('swipe right')
-                // check if other parties saw this or not
-                // ledgerRef.get().then(
-
-                //     function(doc) {
-                //         if (doc.exists) {
-                //             console.log(doc.data())
-                //             restaurantHuh = doc.data()['RID1234']
-                //             console.log(restaurantHuh)
-
-                //             if (restaurantHuh == null) {
-                //                 ledgerRef.update({
-                //                     RID1234: '1'
-                //                 })
-                //             } else {
-                //                 console.log('success')
-                //             }
-                //         }
-                //     }
-                // )
                 
+                updateScore(props.data[props.index]['restaurant_id'])
+                updatePrefs(props.data[props.index]['restaurant_id'], 1)
 
             } else if (gestureState.dx < -120) {
                 Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400}).start(() => {
                     props.incIdx();
                 })
                 console.log('swipe left')
+                updatePrefs(props.data[props.index]['restaurant_id'], 0)
             }
              else {
                 Animated.spring(pan, {toValue : {x : 0, y : 0}, friction : 4}).start()
@@ -139,7 +144,7 @@ const CardDeck = (props) => {
                     
                     // returns an indexed new card with animations and the yes/no text
                     return (
-                        <Animated.View key={res.photos[0]}
+                        <Animated.View key={resIdx}
                         style={[
                             {transform: [{ translateX: pan.x }, { translateY: pan.y }]},
                             {...rotateAndTranslate},
@@ -154,7 +159,7 @@ const CardDeck = (props) => {
                                 <Text style={{color : 'red', fontSize : 30, fontWeight : '700'}}>NO</Text>
                             </Animated.View>
 
-                            <Card key={res.photos[0]}
+                            <Card key={resIdx}
                                 cardIndex={resIdx}
                                 incIdx={props.incIdx}
                                 handleInfoStyle={props.handleInfoStyle}
@@ -169,14 +174,14 @@ const CardDeck = (props) => {
                 
                 // background cards that blend in opacity
                 return (
-                    <Animated.View key={res.photos[0]}
+                    <Animated.View key={resIdx}
                     style={[ {opacity : backCardOpacity},
                         {transform : [{scale : backCardScale}]},
                         styles.individualCard]}
                         {...panResponder.panHandlers}
                     >
 
-                        <Card key={res.photos[0]}
+                        <Card key={resIdx}
                             cardIndex={resIdx}
                             incIdx={props.incIdx}
                             handleInfoStyle={props.handleInfoStyle}
