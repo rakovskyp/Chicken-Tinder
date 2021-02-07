@@ -144,8 +144,8 @@ const ChickenTinderApp = (props) => {
               {!infoStyles && <Details
               index={index}
               picIdx={picIndex}
-              handleInfoStyle={handleInfoStyle}
-              handlePress={handlePress}
+              // handleInfoStyle={handleInfoStyle}
+              // handlePress={handlePress}
               data={resData}
               />}
           </View>

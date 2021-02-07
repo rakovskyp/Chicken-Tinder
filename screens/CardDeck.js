@@ -55,12 +55,7 @@ const CardDeck = (props) => {
         PanResponder.create({
 
         onMoveShouldSetPanResponder: (evt, gestureState) => {
-            if (Math.abs(gestureState.dx) <= 5 || Math.abs(gestureState.dy) <= 5) {
-                // console.log('press')
-            }
-            else if (props.infoStyleHuh) {
                 return true;
-            } 
         },
         onPanResponderMove: (evt, gestureState) => {
             pan.setValue({x : gestureState.dx, y : gestureState.dy})
