@@ -38,14 +38,14 @@ const CardDeck = (props) => {
         pan.setValue({x : 0, y : 0})
     }, [props.index])
 
-    const updateScore = (restid, sentiment) => {
-        scoreRef.update({
+    async function updateScore(restid, sentiment) {
+        await scoreRef.update({
             [restid]: fb.firestore.FieldValue.increment(1)
         })
     }
 
-    const updatePrefs = (restid, sentiment) => {
-        prefRef.update({
+    async function updatePrefs(restid, sentiment) {
+        await prefRef.update({
             [restid]: sentiment
         })
     }
@@ -67,7 +67,6 @@ const CardDeck = (props) => {
                     props.incIdx();
                 })
                 console.log('swipe right')
-                
                 updateScore(props.data[props.index]['restaurant_id'])
                 updatePrefs(props.data[props.index]['restaurant_id'], 1)
 
