@@ -63,7 +63,7 @@ const CardDeck = (props) => {
         },
         onPanResponderRelease: (evt, gestureState) => {
             if (gestureState.dx > 120) {
-                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400}).start(() => {
+                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400, useNativeDriver: true}).start(() => {
                     props.incIdx();
                 })
                 console.log('swipe right')
@@ -71,14 +71,14 @@ const CardDeck = (props) => {
                 updatePrefs(props.data[props.index]['restaurant_id'], 1)
 
             } else if (gestureState.dx < -120) {
-                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400}).start(() => {
+                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400, useNativeDriver: true}).start(() => {
                     props.incIdx();
                 })
                 console.log('swipe left')
                 updatePrefs(props.data[props.index]['restaurant_id'], 0)
             }
              else {
-                Animated.spring(pan, {toValue : {x : 0, y : 0}, friction : 4}).start()
+                Animated.spring(pan, {toValue : {x : 0, y : 0}, friction : 4, useNativeDriver: true}).start()
             }
          }
     });
