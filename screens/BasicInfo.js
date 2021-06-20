@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Keyboard,
   TextInput,
@@ -21,6 +22,17 @@ const BasicInfo = (props) => {
         })
     }
 
+    const saveToAsyncStorage = async (key, value) => {
+      try {
+        const jsonValue = JSON.stringify(value)
+        await AsyncStorage.setItem(key, jsonValue)
+        console.log("async storage:", key, jsonValue, "successful")
+      } catch (err) {
+        console.log("error in saveToAsyncStorage:", err)
+        // alert(err)
+      }
+    }
+
     useEffect(() => {
       console.log('asking for location')
       getLocation()
@@ -29,7 +41,7 @@ const BasicInfo = (props) => {
     // get user's location and send it to the 
     const getLocation = async () => {
       console.log('awaiting')
-      const { status } = await Permissions.askAsync(Permissions.LOCATION)
+      const { status } = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND)
       console.log('finished waiting')
       if (status !== 'granted') {
         console.log('PERMISSION NOT GRANTED FOR LOCATION')
@@ -41,14 +53,18 @@ const BasicInfo = (props) => {
       const userLocation = await Location.getCurrentPositionAsync();
       console.log('worked')
       const { latitude, longitude } = userLocation.coords;
+
+      saveToAsyncStorage('userLatitude', latitude)
+      saveToAsyncStorage('userLongitude', longitude)
+      
+      console.log(userLocation);
       
       // add user's coordinates to firestore database
-      firebase.firestore().collection('coords').add({
+      await firebase.firestore().collection('coords').add({
         latitude: latitude,
         longitude: longitude,
       })
 
-      console.log(userLocation);
     }
 
     
@@ -64,7 +80,6 @@ const BasicInfo = (props) => {
           onSubmitEditing={
               () => {
                 Keyboard.dismiss
-                console.log("Name entered:")
                 navigateUserType()
               }
             }

@@ -12,6 +12,7 @@
     "@expo-google-fonts/jost": "^0.1.0",
     "@mdi/js": "^5.2.45",
     "@mdi/react": "^1.4.0",
+    "@react-native-async-storage/async-storage": "^1.13.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^3.8.3",
     "expo": "^41.0.0",

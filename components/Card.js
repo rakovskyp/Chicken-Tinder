@@ -12,8 +12,6 @@ const Card = (props) => {
     // hook that switches between information mode and swiping mode
     const [infoMode, setInfoMode] = React.useState(false); 
 
-    
-
         return (
                 <TouchableHighlight
                 // activeOpacity={1}
@@ -41,7 +39,11 @@ const Card = (props) => {
                             backgroundColor='transparent'
                             underlayColor='transparent'
                             size={25}
-                            onPress={props.handleInfoStyle}
+                            onPress={
+                                () => {
+                                    props.navInfo()
+                                }
+                            }
                             />
         
                         </View>

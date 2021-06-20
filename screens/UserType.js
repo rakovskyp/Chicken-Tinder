@@ -16,8 +16,10 @@ const UserType = ({ navigation }) => {
 
     const { name } = navigation.state.params;
 
-    const dbRef = firebase.firestore().collection('lobby')
+    console.log("Name entered:", name)
 
+    const dbRef = firebase.firestore().collection('lobby')
+    
     const generateRandom = () => {
       const random = Math.floor(Math.random() * 10000).toString()
 

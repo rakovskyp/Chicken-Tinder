@@ -5,6 +5,7 @@ import ChickenTinderApp from '../ChickenTinderApp'
 import BasicInfo from '../screens/BasicInfo'
 import UserType from '../screens/UserType'
 import Lobby from '../screens/Lobby'
+import InfoScreen from '../screens/InfoScreen'
 import firebase from '../firebase'
 
 const findNewHost = async (personRef) => {
@@ -66,6 +67,12 @@ const screens = {
     },
     ChickenTinderApp: {
         screen: ChickenTinderApp,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+        }),
+    },
+    InfoScreen: {
+        screen: InfoScreen,
         navigationOptions: ({navigation}) => ({
             gestureEnabled: false,
         }),
