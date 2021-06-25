@@ -2,10 +2,12 @@ import React from "react"
 import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
 import ChickenTinderApp from '../ChickenTinderApp'
+import LandingScreen from '../screens/LandingScreen'
 import BasicInfo from '../screens/BasicInfo'
 import UserType from '../screens/UserType'
 import Lobby from '../screens/Lobby'
 import firebase from '../firebase'
+import LoadingScreen from "../screens/LoadingScreen"
 
 const findNewHost = async (personRef) => {
     const newHostSnapshot = await personRef.where('usertype', '==', 'guest').limit(1).get()
@@ -24,10 +26,25 @@ const findNewHost = async (personRef) => {
 }
 
 const screens = {
+    LoadingScreen: {
+        screen: LoadingScreen,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+            headerShown: false
+        })
+    },
+    LandingScreen: {
+        screen: LandingScreen,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+            headerShown: false
+        })
+    },
     BasicInfo: {
         screen: BasicInfo,
         navigationOptions: ({navigation}) => ({
             gestureEnabled: false,
+            headerShown: false
         })
     },
     UserType: {
