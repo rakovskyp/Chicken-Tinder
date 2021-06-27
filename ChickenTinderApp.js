@@ -46,7 +46,6 @@ const ChickenTinderApp = (props) => {
 
   /*
 
-
   - coords should actually be working, for some reason i'm 
   getting only papa johns ????
 
@@ -65,8 +64,7 @@ const ChickenTinderApp = (props) => {
         if (userLat !== null && userLong !== null) {
           console.log("lat", userLat, "long", userLong),
             postData(
-              "https://us-central1-chicken-tinder-c7de2.cloudfunctions.net/grubhubSearch-2",
-              {
+              "https://us-central1-chicken-tinder-c7de2.cloudfunctions.net/grubhubSearch-2", {
                 latitude: userLat,
                 longitude: userLong,
               }
