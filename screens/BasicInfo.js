@@ -5,14 +5,13 @@ import {
   Keyboard,
   TextInput,
   StyleSheet,
-  Button,
   View,
-  Text,
+  Text
 } from "react-native";
-import firebase from '../firebase'
+import firebase from '../firebase';
 
 const BasicInfo = (props) => {
-  
+
     const [name, setName] = React.useState("");
 
     const navigateUserType = () => {
@@ -54,7 +53,10 @@ const BasicInfo = (props) => {
     
   return (
     <>
-      <View>
+      <View style={s.container}>
+        <Text style={s.namePrompt}>
+          ENTER NAME
+        </Text>
         <TextInput
           style={s.input}
           placeholder="Please enter your name ..."
@@ -75,15 +77,26 @@ const BasicInfo = (props) => {
 };
 
 const s = StyleSheet.create({
-  input: {
-    margin: 60,
-    padding: 10,
-    borderWidth: 0.5,
-    borderRadius: 4,
-    backgroundColor: "#fff",
+  container: {
+    backgroundColor: "#895322",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   },
-  host: {
-    paddingTop: 200
+  namePrompt: {
+    color: "#FFD980",
+    fontFamily: "Village",
+    fontSize: 90,
+    paddingBottom: 30
+  },
+  input: {
+    margin: 25,
+    paddingBottom: 5,
+    width: "65%",
+    borderBottomWidth: 3.5,
+    fontSize: 24,
+    borderColor: "#FFD980",
+    color: "#FFD980"
   },
 });
 
