@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import { View, Text, Image, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, ProgressViewIOSComponent, } from 'react-native';
 
 
-// import data from '../sampleData';
+
 import Card from '../components/Card';
 import firebase from '../firebase'
 import fb from 'firebase'
@@ -162,6 +162,7 @@ const CardDeck = (props) => {
                                 handlePress={props.handlePress}
                                 picIdx={props.picIdx}
                                 data={props.data}
+                                navInfo={props.navInfo}
                             />
                             
                         </Animated.View>

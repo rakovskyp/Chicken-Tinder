@@ -8,7 +8,7 @@ const Picture = (props) => {
     const photoSize = props.data[props.cardIndex].photos.length;
 
     // returns the picture based off the given index
-    const pic = props.data[props.cardIndex].photos[props.picIdx % photoSize];
+    const pic = props.data[props.cardIndex].photos[1];
 
     return (
             <Image source={{ uri: pic }}
