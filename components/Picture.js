@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
-// import data from '../sampleData'
+import { StyleSheet, Image } from 'react-native';
 
 // Clickable image that represents the restaurant
 const Picture = (props) => {

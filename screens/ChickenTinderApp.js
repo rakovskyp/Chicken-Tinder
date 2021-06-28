@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Button, View, ScrollView, FlatList } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { FIREBASE_API_KEY } from "@env";
 
-import CardDeck from "./screens/CardDeck";
-import Details from "./components/Details";
+import CardDeck from "../components/CardDeck";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import firebase from "./firebase";
-import fb from "firebase";
 
 /*
   Future Ideas:
@@ -21,10 +18,6 @@ const ChickenTinderApp = (props) => {
   const { docId } = props.navigation.state.params;
 
   const { prefId } = props.navigation.state.params;
-
-  // const ledgerRef = firebase.firestore().collection('lobby').doc(lobbyNumber)
-
-  // const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person').doc(docId)
 
   console.log("firebase api key", FIREBASE_API_KEY);
   console.log("lobby id", props.navigation.state.params.lobbyNumber);
@@ -64,7 +57,7 @@ const ChickenTinderApp = (props) => {
         if (userLat !== null && userLong !== null) {
           console.log("lat", userLat, "long", userLong),
             postData(
-              "https://us-central1-chicken-tinder-c7de2.cloudfunctions.net/grubhubSearch-2", {
+              "https://o6mr05jxvh.execute-api.us-east-2.amazonaws.com/default/Grubhub_Search", {
                 latitude: userLat,
                 longitude: userLong,
               }

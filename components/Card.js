@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableHighlight, Animated, TouchableWithoutFeedback, Button } from 'react-native';
+import { View, StyleSheet, TouchableHighlight } from 'react-native';
 import Picture from '../components/Picture';
 import Misc from '../components/Misc';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,18 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // render the individual card
 const Card = (props) => {
 
-
-    // hook that switches between information mode and swiping mode
-    const [infoMode, setInfoMode] = React.useState(false); 
-
         return (
-                <TouchableHighlight
-                // activeOpacity={1}
-                // onLongPress={props.handlePress}
-                // delayLongPress={1}
-                onPressIn={props.handlePress}
-                // onPress={() => console.log('hi')}
-                >
+
                     <View>
                             <Picture
                             cardIndex={props.cardIndex}
@@ -48,8 +38,6 @@ const Card = (props) => {
         
                         </View>
                 </View>
-    
-                </TouchableHighlight> 
         )
 
 }

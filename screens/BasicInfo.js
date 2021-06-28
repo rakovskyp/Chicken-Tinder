@@ -28,7 +28,6 @@ const BasicInfo = (props) => {
         console.log("async storage:", key, jsonValue, "successful")
       } catch (err) {
         console.log("error in saveToAsyncStorage:", err)
-        // alert(err)
       }
     }
 
@@ -63,10 +62,8 @@ const BasicInfo = (props) => {
         latitude: latitude,
         longitude: longitude,
       })
-
     }
 
-    
   return (
     <>
       <View style={s.container}>

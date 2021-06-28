@@ -1,7 +1,7 @@
 import React from "react"
 import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
-import ChickenTinderApp from '../ChickenTinderApp'
+import ChickenTinderApp from '../screens/ChickenTinderApp'
 import LandingScreen from '../screens/LandingScreen'
 import BasicInfo from '../screens/BasicInfo'
 import UserType from '../screens/UserType'

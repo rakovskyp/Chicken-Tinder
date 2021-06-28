@@ -1,17 +1,12 @@
-import React, {useRef} from 'react';
-import { View, Text, Image, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, ProgressViewIOSComponent, } from 'react-native';
-
-
-
-import Card from '../components/Card';
+import React from 'react';
+import { Text, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, } from 'react-native';
+import Card from './Card';
 import firebase from '../firebase'
 import fb from 'firebase'
 
 
 // represents the swiping deck of cards
 const CardDeck = (props) => {
-
-    const [movingHuh, setMovingHuh] = React.useState(false);
 
     const { lobbyNumber } = props
 
@@ -59,7 +54,6 @@ const CardDeck = (props) => {
         },
         onPanResponderMove: (evt, gestureState) => {
             pan.setValue({x : gestureState.dx, y : gestureState.dy})
-            setMovingHuh(true)
         },
         onPanResponderRelease: (evt, gestureState) => {
             if (gestureState.dx > 120) {
