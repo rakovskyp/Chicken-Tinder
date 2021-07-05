@@ -9,6 +9,7 @@ import Lobby from '../screens/Lobby'
 import InfoScreen from '../screens/InfoScreen'
 import firebase from '../firebase'
 import LoadingScreen from "../screens/LoadingScreen"
+import LocationScreen from "../screens/LocationScreen"
 
 const findNewHost = async (personRef) => {
     const newHostSnapshot = await personRef.where('usertype', '==', 'guest').limit(1).get()
@@ -36,6 +37,13 @@ const screens = {
     },
     LandingScreen: {
         screen: LandingScreen,
+        navigationOptions: ({navigation}) => ({
+            gestureEnabled: false,
+            headerShown: false
+        })
+    },
+    LocationScreen: {
+        screen: LocationScreen,
         navigationOptions: ({navigation}) => ({
             gestureEnabled: false,
             headerShown: false

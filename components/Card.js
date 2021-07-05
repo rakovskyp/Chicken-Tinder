@@ -9,35 +9,36 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Card = (props) => {
 
         return (
+                    // <TouchableHighlight
+                    // onPress={
+                    //     props.navInfo
+                    // }
+                    // >
+                        <View>
+                                <Picture
+                                cardIndex={props.cardIndex}
+                                picIdx={props.picIdx}
+                                data={props.data}
+                                />
+                                
+                                <Misc 
+                                cardIndex={props.cardIndex}
+                                data={props.data}
+                                />
 
-                    <View>
-                            <Picture
-                            cardIndex={props.cardIndex}
-                            picIdx={props.picIdx}
-                            data={props.data}
-                            />
-                            
-                            <Misc 
-                            cardIndex={props.cardIndex}
-                            data={props.data}
-                            />
-
-                        <View style={styles.infoButton}>
-        
-                            <MaterialCommunityIcons.Button
-                            name='information'
-                            backgroundColor='transparent'
-                            underlayColor='transparent'
-                            size={25}
-                            onPress={
-                                () => {
-                                    props.navInfo()
-                                }
-                            }
-                            />
-        
-                        </View>
-                </View>
+                            <View style={styles.infoButton}>
+            
+                                <MaterialCommunityIcons.Button
+                                name='information'
+                                backgroundColor='transparent'
+                                underlayColor='transparent'
+                                size={25}
+                                onPress={props.navInfo}
+                                />
+            
+                            </View>
+                    </View>
+               
         )
 
 }
