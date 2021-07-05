@@ -42,15 +42,15 @@ const screens = {
             headerShown: false
         })
     },
-    LocationScreen: {
-        screen: LocationScreen,
+    BasicInfo: {
+        screen: BasicInfo,
         navigationOptions: ({navigation}) => ({
             gestureEnabled: false,
             headerShown: false
         })
     },
-    BasicInfo: {
-        screen: BasicInfo,
+    LocationScreen: {
+        screen: LocationScreen,
         navigationOptions: ({navigation}) => ({
             gestureEnabled: false,
             headerShown: false

@@ -3,6 +3,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { StyleSheet, View, Text, Dimensions, Button, Image } from 'react-native';
 import MapView, { Marker, AnimatedRegion, Animated } from 'react-native-maps';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GOOGLE_PLACES_API_KEY } from "@env"
 
 const LocationScreen = (props) => {
 
@@ -58,7 +59,7 @@ const LocationScreen = (props) => {
                         })
                     }}
                     query={{
-                        key: 'AIzaSyB7wr8t8zYZ40pag7Cn_OMUEvchIRre4kM',
+                        key: GOOGLE_PLACES_API_KEY,
                         language: 'en',
                         components: "country:us",
                         radius: 30000,
