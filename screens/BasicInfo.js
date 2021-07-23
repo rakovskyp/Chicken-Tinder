@@ -6,13 +6,33 @@ import {
   TextInput,
   StyleSheet,
   View,
-  Text
+  Text,
+  TouchableWithoutFeedback, 
+  Button,
+  Dimensions
 } from "react-native";
 import firebase from '../firebase';
+
+const DismissKeyboard = ( {children} ) => (
+  <TouchableWithoutFeedback onPress={() => dismissAndRenderNextButton()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
+
+let shouldLoadNextButton = false;
+
+const dismissAndRenderNextButton = () => {
+  Keyboard.dismiss()
+  //if (name.trim()) {
+  shouldLoadNextButton = true;
+  //}
+}
 
 const BasicInfo = (props) => {
 
     const [name, setName] = React.useState("");
+
+    //const [loadNextButton, setLoadNextButton] = React.useState(false);
 
     const navigateUserType = () => {
         props.navigation.navigate('UserType', {
@@ -50,16 +70,38 @@ const BasicInfo = (props) => {
       console.log(userLocation);
     }
 
-    
+    const NextButton = () => {
+      return (
+        <TouchableWithoutFeedback onPress={() => navigateUserType()}>
+          <View style={s.buttonContainer}>
+            <Text style={s.nextButtonText}>
+              next
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+      )
+    }
+
+    const NextButton2 = () => {
+      return (
+        <View style={s.buttonContainer}>
+          <Button title="NExT" onPress={() => navigateUserType()}>
+            <Text style={s.nextButtonText}>
+              next
+            </Text>
+          </Button>
+        </View>
+      )
+    }
+
   return (
-    <>
+    <DismissKeyboard>
       <View style={s.container}>
         <Text style={s.namePrompt}>
           ENTER NAME
         </Text>
         <TextInput
           style={s.input}
-          placeholder="Please enter your name ..."
           onChangeText={
             text => setName(text)
           }
@@ -71,33 +113,50 @@ const BasicInfo = (props) => {
               }
             }
         />
+        {shouldLoadNextButton && <NextButton/>}
       </View>
-    </>
+    </DismissKeyboard>
   );
 };
+
+const windowHeight = Dimensions.get('window').height;
 
 const s = StyleSheet.create({
   container: {
     backgroundColor: "#895322",
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "center"
+    //justifyContent: "center"
   },
   namePrompt: {
     color: "#FFD980",
     fontFamily: "Village",
-    fontSize: 90,
-    paddingBottom: 30
+    marginTop: windowHeight/3,
+    fontSize: 90
   },
   input: {
-    margin: 25,
-    paddingBottom: 5,
+    margin: "5%",
+    marginBottom: "15%",
+    paddingBottom: "1%",
     width: "65%",
     borderBottomWidth: 3.5,
     fontSize: 24,
+    textAlign: "center",
     borderColor: "#FFD980",
     color: "#FFD980"
   },
+  nextButtonText: {
+    color: "#895322",
+    fontSize: 24
+  },
+  buttonContainer: {
+    backgroundColor: '#FFD980',
+    borderRadius: 5,
+    paddingTop: 12.5,
+    paddingBottom: 12.5,
+    paddingLeft: 75,
+    paddingRight: 75
+}
 });
 
 export default BasicInfo;

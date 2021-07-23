@@ -1,27 +1,31 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import Logo from '../assets/chickentinder_yellow_4x.png';
+import Logo2 from '../assets/chickentinder_yellow_4x.png';
+import LogoShadow from '../assets/first_page_shadow_4x.png';
+import Logo from '../assets/first_page_4x.png';
 
 const LandingScreen = (props) => {
-    
+
     const navigateBasicInfo = () => {
         props.navigation.navigate('BasicInfo', {})
     }
 
     return (
         <>
-        <View style={s.container}>
+        <View style={s.container} onTouchStart={() => navigateBasicInfo()}>
             <Image
-                source={Logo}
+                source={LogoShadow}
                 style={s.image}
             />
-            <View style={s.buttonContainer}>
+            <Text style={s.text}>
+                Tap anywhere to start
+            </Text>
+            {/* <View style={s.buttonContainer}>
                 <Button
-                    title="LET'S START"
+                    title = " "
                     onPress={() => navigateBasicInfo()}
-                    color="#FFD980"
                 />
-            </View>
+            </View> */}
         </View>
         </>
     );
@@ -35,14 +39,13 @@ const s = StyleSheet.create({
       justifyContent: "center"
     },
     image: {
-        width: 375,
-        height: 667,
-      justifyContent: "center"
+        width: 378,
+        height: 265,
+        justifyContent: "center"
     },
-    buttonContainer: {
-        backgroundColor: '#E83E32',
-        borderRadius: 5,
-        padding: 8,
+    text: {
+        color: "#E83E32",
+        fontSize: 24
     }
   });
   

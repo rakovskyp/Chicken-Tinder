@@ -51,6 +51,7 @@ const screens = {
         screen: UserType,
         navigationOptions: ({navigation}) => ({
             gestureEnabled: false,
+            headerShown: false
         })
     },
     Lobby: {
