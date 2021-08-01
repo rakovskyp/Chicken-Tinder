@@ -1,17 +1,12 @@
-import React, {useRef} from 'react';
-import { View, Text, Image, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, ProgressViewIOSComponent, } from 'react-native';
-
-
-// import data from '../sampleData';
-import Card from '../components/Card';
+import React from 'react';
+import { Text, StyleSheet, Animated, PanResponder, StatusBar, Dimensions, } from 'react-native';
+import Card from './Card';
 import firebase from '../firebase'
 import fb from 'firebase'
 
 
 // represents the swiping deck of cards
 const CardDeck = (props) => {
-
-    const [movingHuh, setMovingHuh] = React.useState(false);
 
     const { lobbyNumber } = props
 
@@ -59,11 +54,10 @@ const CardDeck = (props) => {
         },
         onPanResponderMove: (evt, gestureState) => {
             pan.setValue({x : gestureState.dx, y : gestureState.dy})
-            setMovingHuh(true)
         },
         onPanResponderRelease: (evt, gestureState) => {
             if (gestureState.dx > 120) {
-                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400}).start(() => {
+                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400, useNativeDriver: true}).start(() => {
                     props.incIdx();
                 })
                 console.log('swipe right')
@@ -71,14 +65,14 @@ const CardDeck = (props) => {
                 updatePrefs(props.data[props.index]['restaurant_id'], 1)
 
             } else if (gestureState.dx < -120) {
-                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400}).start(() => {
+                Animated.spring(pan, {toValue : {x : gestureState.dx > 0 ? width + 300 : -width - 300, y : gestureState.dy}, duration : 400, useNativeDriver: true}).start(() => {
                     props.incIdx();
                 })
                 console.log('swipe left')
                 updatePrefs(props.data[props.index]['restaurant_id'], 0)
             }
              else {
-                Animated.spring(pan, {toValue : {x : 0, y : 0}, friction : 4}).start()
+                Animated.spring(pan, {toValue : {x : 0, y : 0}, friction : 4, useNativeDriver: true}).start()
             }
          }
     });
@@ -162,6 +156,7 @@ const CardDeck = (props) => {
                                 handlePress={props.handlePress}
                                 picIdx={props.picIdx}
                                 data={props.data}
+                                navInfo={props.navInfo}
                             />
                             
                         </Animated.View>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
-// import data from '../sampleData'
 import {
     useFonts,
     Jost_100Thin,

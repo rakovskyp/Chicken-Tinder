@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, StatusBar, Dimensions, TouchableOpacity } from 'react-native';
-// import data from '../sampleData'
+import { StyleSheet, Image } from 'react-native';
 
 // Clickable image that represents the restaurant
 const Picture = (props) => {
@@ -8,7 +7,7 @@ const Picture = (props) => {
     const photoSize = props.data[props.cardIndex].photos.length;
 
     // returns the picture based off the given index
-    const pic = props.data[props.cardIndex].photos[props.picIdx % photoSize];
+    const pic = props.data[props.cardIndex].photos[1];
 
     return (
             <Image source={{ uri: pic }}

@@ -16,10 +16,10 @@ const UserType = ({ navigation }) => {
 
     const [lobbyNumber, setLobbyNumber] = React.useState("")
 
-    const { name } = navigation.state.params;
+    const { name } = navigation.state.params
 
     const dbRef = firebase.firestore().collection('lobby')
-
+    
     const generateRandom = () => {
       const random = Math.floor(Math.random() * 10000).toString()
 
@@ -42,12 +42,20 @@ const UserType = ({ navigation }) => {
       // create scoreboard
       dbRef.doc(random).collection("leaderboard").doc("score").set({})
 
-      navigation.navigate('Lobby', {
+      // navigation.navigate('Lobby', {
+      //   userType: 'host',
+      //   lobbyNumber: random,
+      //   docId:  res.id,
+      //   prefId: pref.id
+      // })
+      navigation.navigate('LocationScreen', {
         userType: 'host',
         lobbyNumber: random,
         docId:  res.id,
-        prefId: pref.id
+        prefId: pref.id,
+        name: name
       })
+
     }
 
     const addGuestToLobby = async (lobbyNumber, name) => {
@@ -64,7 +72,8 @@ const UserType = ({ navigation }) => {
         userType: 'guest',
         lobbyNumber: lobbyNumber,
         docId:  res.id,
-        prefId: pref.id
+        prefId: pref.id,
+        name: name
       })
     }
 

@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
 import {
   Keyboard,
   TextInput,
@@ -11,7 +9,6 @@ import {
   Button,
   Dimensions
 } from "react-native";
-import firebase from '../firebase';
 
 const DismissKeyboard = ( {children} ) => (
   <TouchableWithoutFeedback onPress={() => dismissAndRenderNextButton()}>
@@ -108,7 +105,6 @@ const BasicInfo = (props) => {
           onSubmitEditing={
               () => {
                 Keyboard.dismiss
-                console.log("Name entered:")
                 navigateUserType()
               }
             }
