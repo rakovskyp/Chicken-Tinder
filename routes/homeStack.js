@@ -82,7 +82,7 @@ const screens = {
 
                     personRef.doc(docId).delete()
 
-                    navigation.navigate('UserType')
+                    navigation.goBack()
                     // 2-13-2020 - don't forget, deleting a document doesn't delete it's subcollections
                     // DELETE LOBBIES WHEN THERE ARE NO PEOPLE IN IT!!!!
                 }

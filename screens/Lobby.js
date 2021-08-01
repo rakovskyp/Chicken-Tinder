@@ -24,6 +24,8 @@ const Lobby = (props) => {
 
     const { prefId } = props.navigation.state.params
 
+    // console.log(lobbyNumber)
+
     const personRef = firebase.firestore().collection('lobby').doc(lobbyNumber).collection('person')
 
     const navigateChickenTinderApp = () => {

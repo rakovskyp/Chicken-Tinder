@@ -11,8 +11,8 @@ const BasicInfo = (props) => {
 
     const [name, setName] = React.useState("");
 
-    const navigateLocationScreen = () => {
-        props.navigation.navigate('LocationScreen', {
+    const navigateUserType = () => {
+        props.navigation.navigate('UserType', {
           name: name
         })
     }
@@ -32,7 +32,7 @@ const BasicInfo = (props) => {
           onSubmitEditing={
               () => {
                 Keyboard.dismiss
-                navigateLocationScreen()
+                navigateUserType()
               }
             }
         />

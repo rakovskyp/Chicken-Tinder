@@ -55,17 +55,25 @@ const ChickenTinderApp = (props) => {
         const userLong = await AsyncStorage.getItem("userLongitude");
 
         if (userLat !== null && userLong !== null) {
-          console.log("lat", userLat, "long", userLong),
-            postData(
-              "https://o6mr05jxvh.execute-api.us-east-2.amazonaws.com/default/Grubhub_Search", {
-                latitude: userLat,
-                longitude: userLong,
-              }
-            ).then((data) => {
-              console.log("data incoming:");
-              console.log(data); // JSON data parsed by `response.json()` call
-              setResData(data);
-            });
+
+          getToken().then(
+            (tokenData) => {
+              console.log("token data", tokenData)
+              postData(
+                "https://o6mr05jxvh.execute-api.us-east-2.amazonaws.com/default/Grubhub_Search", {
+                  latitude: userLat,
+                  longitude: userLong,
+                }, tokenData.auth_token
+                // put this in a try catch, what if the token doesn't work??
+              ).then((data) => {
+                console.log("data incoming:");
+                console.log(data); // JSON data parsed by `response.json()` call
+                setResData(data);
+              });
+
+            }
+          )
+            
         }
       } catch (e) {
         console.log("error", e);
@@ -76,10 +84,29 @@ const ChickenTinderApp = (props) => {
   }, []);
 
   // request data from google cloud platform
-  async function postData(url = "", data = {}) {
+  async function postData(url = "", data = {}, token) {
     // Default options are marked with *
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : token,
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
+
+  async function getToken() {
+    // Default options are marked with *
+    const response = await fetch('https://v7zjrf3ocj.execute-api.us-east-2.amazonaws.com/default/token_gen', {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       credentials: "same-origin", // include, *same-origin, omit
@@ -89,7 +116,6 @@ const ChickenTinderApp = (props) => {
       },
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
     return response.json(); // parses JSON response into native JavaScript objects
   }
