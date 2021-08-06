@@ -18,7 +18,8 @@ const InfoScreen = (props) => {
 
     return (
         <View>
-            <Modal animationType="slide"
+            <Modal 
+                animationType="slide"
                 transparent={true}
                 visible={props.modalActive}
                 style={styles.overlay}
