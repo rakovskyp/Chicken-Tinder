@@ -37,6 +37,9 @@ const ChickenTinderApp = (props) => {
   // reference to the main scroll view
   const mainScroll = React.useRef();
 
+  // Hook to determine if the modal "info page" should be displayed or not
+  const [infoVisible, setInfoVisible] = React.useState(false); 
+
   /*
 
   - coords should actually be working, for some reason i'm 
@@ -130,8 +133,12 @@ const ChickenTinderApp = (props) => {
   };
 
   const navigateInfoScreen = () => {
+    console.log("Navigating to InfoScreen")
     props.navigation.navigate("InfoScreen", {
-      somedata: "somedata",
+      data: resData,
+      cardIndex: index, 
+      modalActive: infoVisible, 
+      toggleInfo: handleInfoPress 
     });
   };
 
@@ -145,6 +152,12 @@ const ChickenTinderApp = (props) => {
     console.log("incrementing pics");
     setPicIndex((picIndex) => picIndex + 1);
   };
+
+  // handles activating the modal information screen 
+  const handleInfoPress = () => {
+    console.log("Info Toggled")
+    setInfoVisible(!infoVisible)
+  }
 
   return (
     <View style={{ flex: 1, flexDirection: "column" }}>
@@ -181,6 +194,7 @@ const ChickenTinderApp = (props) => {
                   prefId={prefId}
                   data={resData}
                   navInfo={navigateInfoScreen}
+                  infoPress={handleInfoPress}
                 />
               )}
             </View>

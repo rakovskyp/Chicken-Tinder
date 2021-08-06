@@ -157,6 +157,7 @@ const CardDeck = (props) => {
                                 picIdx={props.picIdx}
                                 data={props.data}
                                 navInfo={props.navInfo}
+                                infoPress={props.handleInfoPress}
                             />
                             
                         </Animated.View>
@@ -202,8 +203,8 @@ const styles = StyleSheet.create({
         width: 355,
         height: 600,
         margin: 10,
-        marginTop: 100,
-        marginBottom: 100,
+        marginTop: 25,
+        marginBottom: 150,
         borderWidth: 1,
         backgroundColor: 'white',
         borderColor: 'white',

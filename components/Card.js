@@ -32,8 +32,9 @@ const Card = (props) => {
                                 name='information'
                                 backgroundColor='transparent'
                                 underlayColor='transparent'
-                                size={25}
+                                size={40}
                                 onPress={props.navInfo}
+                                cardIndex = {props.cardIndex}
                                 />
             
                             </View>
@@ -46,8 +47,8 @@ const Card = (props) => {
 const styles = StyleSheet.create({
     infoButton: {
         position: 'absolute',
-        marginTop: 510,
-        marginLeft: 300,
+        marginTop: 485,
+        marginLeft: 250,
     }
 })
 
