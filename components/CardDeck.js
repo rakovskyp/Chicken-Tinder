@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
         height: 600,
         margin: 10,
         marginTop: 25,
-        marginBottom: 150,
+        marginBottom: 100,
         borderWidth: 1,
         backgroundColor: 'white',
         borderColor: 'white',

@@ -133,6 +133,19 @@ const ChickenTinderApp = (props) => {
   };
 
   const navigateInfoScreen = () => {
+    //TODO: Right now it is navigating to this modal as a separate screen. 
+    // If we want to achieve an overlay, we might want to render the info screen 
+    // in the card deck. Either way, it seems to make sense to keep the infoscreen 
+    // as a separate component. 
+    // This package might be a way to achieve this: https://www.npmjs.com/package/react-native-modal-overlay
+
+    //TODO: Another note, I have been having trouble with my expo build getting the button click to work
+    // I am fairly confident the stuff I have added should work, but take a look for yourself anyway. 
+
+    // set the info screen to be visible
+    setInfoVisible(!infoVisible)
+
+    // Navigate to the info screen and provide appropriate props. 
     console.log("Navigating to InfoScreen")
     props.navigation.navigate("InfoScreen", {
       data: resData,

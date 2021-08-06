@@ -21,6 +21,7 @@ const InfoScreen = (props) => {
             <Modal animationType="slide"
                 transparent={true}
                 visible={props.modalActive}
+                style={styles.overlay}
             >
                 <View>
                     <Text>Info Modal Test Screen</Text>
@@ -41,8 +42,17 @@ const InfoScreen = (props) => {
     )
 }
 
-const s = StyleSheet.create({
-
+const styles = StyleSheet.create({
+    overlay: {
+        opacity: 0.5, 
+        height: 485, 
+        width: 300, 
+        margin: 10, 
+        marginTop: 100, 
+        marginBottom: 150, 
+        borderWidth: 1, 
+        overflow: 'hidden'
+    }
 });
 
 export default InfoScreen;
